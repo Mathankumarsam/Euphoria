@@ -4,6 +4,30 @@ import styled from "styled-components";
 import img1 from "../assets/images/bg-4.jpg";
 import img2 from "../assets/images/bg-5.jpg";
 
+
+const App = () => (
+  <Section>
+    <ImageContainer>
+      <ImageDiv1>
+        <div>
+          <Heading>WE MADE YOUR EVERYDAY FASHION BETTER!</Heading>
+          <Paragraph>
+            In our journey to improve everyday fashion, euphoria presents
+            EVERYDAY wear range - Comfortable & Affordable fashion 24/7
+          </Paragraph>
+          <Links to="">Shop Now</Links>
+        </div>
+      </ImageDiv1>
+      <ImageDiv2 />
+    </ImageContainer>
+  </Section>
+);
+
+export default App;
+
+
+
+
 const Section = styled.section`
   display: flex;
   flex-direction: column;
@@ -76,22 +100,3 @@ const ImageDiv2 = styled.div`
   border-bottom-right-radius: 14px;
 `;
 
-const App = () => (
-  <Section>
-    <ImageContainer>
-      <ImageDiv1>
-        <div>
-          <Heading>WE MADE YOUR EVERYDAY FASHION BETTER!</Heading>
-          <Paragraph>
-            In our journey to improve everyday fashion, euphoria presents
-            EVERYDAY wear range - Comfortable & Affordable fashion 24/7
-          </Paragraph>
-          <Links to="">Shop Now</Links>
-        </div>
-      </ImageDiv1>
-      <ImageDiv2 />
-    </ImageContainer>
-  </Section>
-);
-
-export default App;

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useSearch } from "../components/Search";
 import styled from "styled-components";
 import { DataContext } from "../services/ProductApi";
 import { useNavigate } from "react-router-dom";
@@ -12,9 +13,18 @@ export default function MensCollections() {
   const [menCollections, setMenCollections] = useState([]);
   const [isClicked, setIsClicked] = useState({});
 
+  const {search} = useSearch();
+
   const { data = [], loading, error } = context;
 
-  // 🔥 Function to fetch and set the wishlist items when the page is loaded
+  
+
+  const searchProduct = search
+    ? menCollections.filter((product) =>
+        product.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : menCollections;
+
   const fetchWishlistStatus = async () => {
     try {
       const token = localStorage.getItem("authToken");
@@ -33,9 +43,9 @@ export default function MensCollections() {
 
       const data = await response.json();
       if (response.ok) {
-        // 🔥 Convert server response to update `isClicked`
+        
         const wishlistStatus = data.reduce((acc, product) => {
-          acc[product.id] = true; // Assume the product is in the wishlist
+          acc[product.id] = true; 
           return acc;
         }, {});
         setIsClicked(wishlistStatus);
@@ -56,7 +66,6 @@ export default function MensCollections() {
           );
           setMenCollections(filteredProduct);
 
-          // 🔥 Call the wishlist status on page load
           await fetchWishlistStatus();
         }
       } catch (error) {
@@ -125,7 +134,7 @@ export default function MensCollections() {
           <Title>Mens Collections</Title>
         </Container>
         <ImageWrapper>
-          {menCollections.map((product) => (
+          {searchProduct.map((product) => (
             <div key={product.id}>
               <HeartDiv onClick={() => wishlist(product.id)}>
                 <svg

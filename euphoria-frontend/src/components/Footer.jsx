@@ -140,6 +140,7 @@ const TopDiv = styled.div`
   margin: 10px auto;
   padding-top: 40px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   gap: 0px;
 `;

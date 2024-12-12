@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function Limelight() {
   const navigate = useNavigate();
   const context = useContext(DataContext);
-  const [limelight, setLimelight] = useState([]); // Products in limelight category
+  const [limelight, setLimelight] = useState([]); 
   const { data = [], loading, error } = context;
 
   const [isClicked, setIsClicked] = useState({});
@@ -29,9 +29,9 @@ export default function Limelight() {
 
       const data = await response.json();
       if (response.ok) {
-        // 🔥 Convert server response to update `isClicked`
+        
         const wishlistStatus = data.reduce((acc, product) => {
-          acc[product.id] = true; // Assume the product is in the wishlist
+          acc[product.id] = true; 
           return acc;
         }, {});
         setIsClicked(wishlistStatus);
@@ -51,7 +51,7 @@ export default function Limelight() {
             const filteredProduct = getRandomProducts(data, 4)
             setLimelight(filteredProduct);
   
-            // 🔥 Call the wishlist status on page load
+            
             await fetchWishlistStatus();
           }
         } catch (error) {
@@ -66,9 +66,9 @@ export default function Limelight() {
       return shuffled.slice(0, count);
     };
 
-  // Handle product image click to navigate to product details
+    
   const handleImageClick = (id) => {
-    navigate(`/products/${id}`); // Navigate to product details page
+    navigate(`/products/${id}`); 
   };
 
   const wishlist = async (id) => {
@@ -115,7 +115,7 @@ export default function Limelight() {
   };
  
 
-  // Show loading or error messages
+  
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 

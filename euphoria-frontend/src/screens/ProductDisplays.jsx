@@ -47,7 +47,7 @@ const ProductPage = () => {
     fetchProduct();
   }, [id]);
 
-  // Add to Cart Hook
+  
   const handleAddToCart = async () => {
     const token = localStorage.getItem("authToken");
     console.log(token)
@@ -68,7 +68,7 @@ const ProductPage = () => {
           body: JSON.stringify({
             color: selectedColor,
             size: selectedSize,
-            quantity: 1, // You can manage quantity if needed
+            quantity: 1,
           }),
         }
       );
@@ -107,7 +107,7 @@ const ProductPage = () => {
           body: JSON.stringify({
             color: selectedColor,
             size: selectedSize,
-            quantity: 1, // Assuming 1 for now; adjust if needed
+            quantity: 1,
           }),
         }
       );
@@ -366,7 +366,6 @@ const ProductPage = () => {
           </DiscriptionContent>
         </ProductDescription>
       </Wrapper>
-      {/* <SimilarProducts currentProductId={selectedProduct.id} /> */}
     </>
   );
 };
@@ -604,8 +603,7 @@ const FeaturesList = styled.div`
     border-bottom: none;
   }
   @media (max-width: 768px) {
-    // grid-template-columns: 1fr;
-    // gap: 1rem;
+    
   }
 `;
 const FeatureItem = styled.div`

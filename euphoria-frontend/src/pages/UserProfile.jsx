@@ -3,6 +3,83 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
+
+
+const UserProfile = () => {
+  const [userData, setUserData] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        navigate('/login'); 
+        return;
+      }
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/wishlist/user/profile/', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const data = await response.json();
+          console.error('Error fetching user data:', data);
+          navigate('/login'); 
+          return;
+        }
+
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        setError('Failed to load user data. Please try again.');
+        console.error('Error:', error);
+        navigate('/login'); 
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    navigate('/login');
+  };
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
+  return (
+    <ProfileContainer>
+      <Avatar 
+        src={userData.avatarUrl || 'https://via.placeholder.com/100'} 
+        alt="User Avatar" 
+      />
+      <ProfileHeader>User Profile</ProfileHeader>
+      <UserDetails>
+        <UserDetail>Name: {userData.username || 'N/A'}</UserDetail>
+        <UserDetail>Email: {userData.email || 'N/A'}</UserDetail>
+        <UserDetail>Location: {userData.location || 'N/A'}</UserDetail>
+        <UserDetail>Phone: {userData.phone || 'N/A'}</UserDetail>
+      </UserDetails>
+      <ButtonContainer>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+      </ButtonContainer>
+    </ProfileContainer>
+  );
+};
+
+export default UserProfile;
+
+
 const ProfileContainer = styled.div`
   width: 100%;
   max-width: 800px;
@@ -78,77 +155,3 @@ const Avatar = styled.img`
   border: 3px solid #007bff;
   margin-bottom: 20px;
 `;
-
-const UserProfile = () => {
-  const [userData, setUserData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        navigate('/login'); // Redirect if no token found
-        return;
-      }
-
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/wishlist/user/profile/', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          const data = await response.json();
-          console.error('Error fetching user data:', data);
-          navigate('/login'); // Redirect if the token is invalid or expired
-          return;
-        }
-
-        const data = await response.json();
-        setUserData(data);
-      } catch (error) {
-        setError('Failed to load user data. Please try again.');
-        console.error('Error:', error);
-        navigate('/login'); // Redirect if error occurs
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('authToken');
-    navigate('/login');
-  };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
-  return (
-    <ProfileContainer>
-      <Avatar 
-        src={userData.avatarUrl || 'https://via.placeholder.com/100'} 
-        alt="User Avatar" 
-      />
-      <ProfileHeader>User Profile</ProfileHeader>
-      <UserDetails>
-        <UserDetail>Name: {userData.username || 'N/A'}</UserDetail>
-        <UserDetail>Email: {userData.email || 'N/A'}</UserDetail>
-        <UserDetail>Location: {userData.location || 'N/A'}</UserDetail>
-        <UserDetail>Phone: {userData.phone || 'N/A'}</UserDetail>
-      </UserDetails>
-      <ButtonContainer>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-      </ButtonContainer>
-    </ProfileContainer>
-  );
-};
-
-export default UserProfile;

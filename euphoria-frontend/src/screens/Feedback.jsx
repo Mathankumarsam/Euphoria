@@ -12,7 +12,10 @@ export default function Feedback() {
         <ReviewContainer>
           <div>
             <Profile>
-              <ProfileImage src={require("../assets/icons/span-1.svg").default} alt="Floyd Miles" />
+              <ProfileImage
+                src={require("../assets/icons/span-1.svg").default}
+                alt="Floyd Miles"
+              />
               <Name>Floyd Miles</Name>
             </Profile>
             <Rating src="" alt="Ratings star" />
@@ -27,7 +30,10 @@ export default function Feedback() {
         <ReviewContainer>
           <div>
             <Profile>
-              <ProfileImage src={require("../assets/icons/span-2.svg").default} alt="Floyd Miles" />
+              <ProfileImage
+                src={require("../assets/icons/span-2.svg").default}
+                alt="Floyd Miles"
+              />
               <Name>Floyd Miles</Name>
             </Profile>
             <Rating src="" alt="Ratings star" />
@@ -42,7 +48,10 @@ export default function Feedback() {
         <ReviewContainer>
           <div>
             <Profile>
-              <ProfileImage  src={require("../assets/icons/span-3.svg").default} alt="Floyd Miles" />
+              <ProfileImage
+                src={require("../assets/icons/span-3.svg").default}
+                alt="Floyd Miles"
+              />
               <Name>Floyd Miles</Name>
             </Profile>
             <Rating src="" alt="Ratings star" />
@@ -66,6 +75,7 @@ const SectionWrapper = styled.section`
 
 const Section = styled.section`
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   margin: 50px auto 0;
 `;
@@ -91,15 +101,16 @@ const Title = styled.h1`
   color: #333;
 `;
 
-// Container for each review block
 const ReviewContainer = styled.div`
+  min-width: 200px;
+  max-width: 350px;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   gap: 10px;
   border: 1px solid #ddd;
   padding: 15px;
   border-radius: 8px;
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
 
   div {
     display: flex;
@@ -107,14 +118,12 @@ const ReviewContainer = styled.div`
   }
 `;
 
-// Inner container for profile picture and name
 const Profile = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
 `;
 
-// Profile image styling
 const ProfileImage = styled.img`
   width: 50px;
   height: 50px;
@@ -122,24 +131,23 @@ const ProfileImage = styled.img`
   object-fit: cover;
 `;
 
-// Name styling
 const Name = styled.h3`
   font-size: 18px;
   font-weight: 600;
   color: #333;
 `;
 
-// Rating image styling
 const Rating = styled.img`
   width: 100px;
   height: 20px;
   object-fit: contain;
 `;
 
-// Review text styling
 const ReviewText = styled.p`
   font-size: 14px;
   color: #555;
   line-height: 1.6;
   margin-top: 10px;
 `;
+
+

@@ -33,9 +33,9 @@ export default function WomensCollections() {
 
       const data = await response.json();
       if (response.ok) {
-        // 🔥 Convert server response to update `isClicked`
+        
         const wishlistStatus = data.reduce((acc, product) => {
-          acc[product.id] = true; // Assume the product is in the wishlist
+          acc[product.id] = true;
           return acc;
         }, {});
         setIsClicked(wishlistStatus);
@@ -56,7 +56,7 @@ export default function WomensCollections() {
           );
           setMenCollections(filteredProduct);
 
-          // 🔥 Call the wishlist status on page load
+         
           await fetchWishlistStatus();
         }
       } catch (error) {

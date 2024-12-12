@@ -8,7 +8,7 @@ const WomensCategory = () => {
   const context = useContext(DataContext);
   const [menCollections, setMenCollections] = useState([]);
 
-  // Default destructuring to avoid errors if context is null
+  
   const { data = [], loading, error } = context ;
 
   useEffect(() => {

@@ -2,12 +2,17 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
+import { useSearch } from "./Search";
+
 export default function Header() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
+  const [menuOpen, setmenuOpen] = useState(false);
+  const [search, setSearch] = useSearch();
+
   useEffect(() => {
-    // Get username from localStorage
+    
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername);
   }, []);
@@ -19,18 +24,45 @@ export default function Header() {
   };
 
   const handleLoginClick = () => {
-    navigate("/login"); // Navigate to login page
+    navigate("/login"); 
+  };
+
+  const toogleMenu = () => {
+    setmenuOpen(!menuOpen);
   };
 
   return (
     <Navbar>
       {/* Logo */}
+      <Menuicon onClick={toogleMenu}>
+        <div></div>
+        <div></div>
+        <div></div>
+      </Menuicon>
       <NavLink to="/">
         <Logo
           src={require("../assets/icons/Logo.svg").default}
           alt="Euphoria Logo"
         />
       </NavLink>
+
+      <MobileMenu isOpen={menuOpen}>
+        <NavItem>
+          <MobileLink to="/shop">Shop</MobileLink>
+        </NavItem>
+        <NavItem>
+          <MobileLink to="/men-collection">Men</MobileLink>
+        </NavItem>
+        <NavItem>
+          <MobileLink to="/women-collection">Women</MobileLink>
+        </NavItem>
+        <NavItem>
+          <MobileLink to="/combos">Combos</MobileLink>
+        </NavItem>
+        <NavItem>
+          <MobileLink to="/joggers">Joggers</MobileLink>
+        </NavItem>
+      </MobileMenu>
 
       {/* Navigation Links */}
       <NavList>
@@ -57,7 +89,12 @@ export default function Header() {
           src={require("../assets/icons/search.svg").default}
           alt="search_icon"
         />
-        <SearchBar type="text" placeholder="Search..." />
+        <SearchBar
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </Inpudiv>
 
       {/* Icons Section */}
@@ -101,7 +138,7 @@ export default function Header() {
           </NavLink>
         </IconItem>
         <IconItem>
-          <NavLink to="/profile">
+          <NavLink to={username ? "/profile" : "/login"}>
             <svg
               width="16"
               height="16"
@@ -117,7 +154,7 @@ export default function Header() {
           </NavLink>
           {username ? (
             <UserSection>
-              <NavLink to="/profile" >
+              <NavLink to="/profile">
                 <span> Hai, {username}</span>
               </NavLink>
               <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
@@ -132,6 +169,25 @@ export default function Header() {
 }
 
 // Styled Components
+const Menuicon = styled.div`
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 18px;
+  cursor: pointer;
+
+  div {
+    width: 100%;
+    height: 3px;
+    background-color: #333;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
 const Navbar = styled.div`
   position: sticky;
   top: 0;
@@ -146,6 +202,32 @@ const Navbar = styled.div`
   background-color: white;
 `;
 
+const MobileMenu = styled.div`
+  display: ${(props) => (props.isOpen ? "block" : "none")};
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  z-index: 10;
+  list-style: none;
+`;
+
+const MobileLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  font-size: 18px;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+    font-weight: bolder;
+    transition: color 0.3s ease-in-out;
+  }
+`;
+
 const Logo = styled.img`
   height: 40px;
 `;
@@ -155,6 +237,10 @@ const NavList = styled.ul`
   list-style: none;
   gap: 1.5rem;
   font-family: Causten;
+
+  @media screen and (min-width: 360px) and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const NavItem = styled.li`

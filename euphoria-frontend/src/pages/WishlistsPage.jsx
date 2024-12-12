@@ -11,7 +11,7 @@ const WishlistsPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // Token refresh function
+  
   const refreshAuthToken = async () => {
     let token = localStorage.getItem("authToken");
     const refreshToken = localStorage.getItem("refreshToken");
@@ -58,7 +58,7 @@ const WishlistsPage = () => {
 
     try {
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/v1/wishlist/user/wishlist/", // Update this URL if needed
+        "http://127.0.0.1:8000/api/v1/wishlist/user/wishlist/",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ const WishlistsPage = () => {
   }, [fetchWishlists]);
 
   const handleImageClick = (id) => {
-    navigate(`/products/${id}`); // Navigate to product details page
+    navigate(`/products/${id}`); 
   };
 
   return (

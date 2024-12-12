@@ -4,7 +4,33 @@ import styled from "styled-components";
 import img1 from "../assets/images/bg-2.jpg";
 import img2 from "../assets/images/bg-3.jpg";
 
-// Container for the section
+
+
+
+export default function OfferSec() {
+  return (
+    <Section>
+      <Div>
+        <div>
+          <Paragraph>Low Price</Paragraph>
+          <Heading>High Coziness</Heading>
+          <Paragraph1>UPTO 50% OFF</Paragraph1>
+          <Anchor href="">Explore Items</Anchor>
+        </div>
+      </Div>
+      <Div1>
+        <div>
+          <Paragraph>Beyoung presents</Paragraph>
+          <Heading>Breezy Summer Style</Heading>
+          <Paragraph1>UPTO 50% OFF</Paragraph1>
+          <Anchor href="">Explore Items</Anchor>
+        </div>
+      </Div1>
+    </Section>
+  );
+}
+
+
 const Section = styled.section`
   display: flex;
   justify-content: space-between;
@@ -14,7 +40,7 @@ const Section = styled.section`
   margin: 100px auto 0;
 `;
 
-// Container for each individual section
+
 const Div = styled.div`
   width: 50%;
   height: 400px;
@@ -57,7 +83,7 @@ const Div1 = styled.div`
 
 `;
 
-// Paragraph style
+
 const Paragraph = styled.p`
   font-size: 16px;
   font-weight: 800;
@@ -73,7 +99,7 @@ const Paragraph1 = styled.p`
 
 `;
 
-// Heading 1 style
+
 const Heading = styled.h1`
   font-size: 34px;
   font-weight: 800;
@@ -81,7 +107,6 @@ const Heading = styled.h1`
   margin-top: 24px;
 `;
 
-// Anchor style
 const Anchor = styled.a`
   display: inline-block;
   color: white;
@@ -95,26 +120,3 @@ const Anchor = styled.a`
     text-decoration: underline;
   }
 `;
-
-export default function OfferSec() {
-  return (
-    <Section>
-      <Div>
-        <div>
-          <Paragraph>Low Price</Paragraph>
-          <Heading>High Coziness</Heading>
-          <Paragraph1>UPTO 50% OFF</Paragraph1>
-          <Anchor href="">Explore Items</Anchor>
-        </div>
-      </Div>
-      <Div1>
-        <div>
-          <Paragraph>Beyoung presents</Paragraph>
-          <Heading>Breezy Summer Style</Heading>
-          <Paragraph1>UPTO 50% OFF</Paragraph1>
-          <Anchor href="">Explore Items</Anchor>
-        </div>
-      </Div1>
-    </Section>
-  );
-}

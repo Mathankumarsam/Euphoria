@@ -66,8 +66,8 @@ export default function WomensCollections() {
     fetchData();
   }, [data]);
 
-  const handleClick = (id) => {
-    navigate(`/products/${id}`);
+  const handleClick = (id, category) => {
+    navigate(`/products/${id}`, {state:{category}});
   };
 
   const wishlist = async (id) => {
@@ -150,7 +150,7 @@ export default function WomensCollections() {
               <Cardimage
                 src={product.image}
                 alt={product.name}
-                onClick={() => handleClick(product.id)}
+                onClick={() => handleClick(product.id, product.category)}
               />
 
               <CategoryCard>

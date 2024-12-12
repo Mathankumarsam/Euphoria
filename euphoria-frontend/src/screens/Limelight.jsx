@@ -11,27 +11,106 @@ export default function Limelight() {
 
   const [isClicked, setIsClicked] = useState({});
 
-  // Filter and set limelight products (western-wears)
-  useEffect(() => {
-    if (Array.isArray(data)) {
-      const filteredProducts = data.filter((product) =>
-        product.category.includes("western-wears")
+  const fetchWishlistStatus = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (!token) return;
+
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/v1/wishlist/user/wishlist/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      setLimelight(filteredProducts.slice(0, 4)); // Top 4 products
+
+      const data = await response.json();
+      if (response.ok) {
+        // 🔥 Convert server response to update `isClicked`
+        const wishlistStatus = data.reduce((acc, product) => {
+          acc[product.id] = true; // Assume the product is in the wishlist
+          return acc;
+        }, {});
+        setIsClicked(wishlistStatus);
+      } else {
+        console.error("Failed to fetch wishlist items:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching wishlist items:", error);
     }
-  }, [data]);
+  };
+
+
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          if (Array.isArray(data)) {
+            const filteredProduct = data.filter((product) =>
+              product.category.includes("womens collections")
+            );
+            setLimelight(filteredProduct.slice(0, 4));
+  
+            // 🔥 Call the wishlist status on page load
+            await fetchWishlistStatus();
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
+    }, [data]);
 
   // Handle product image click to navigate to product details
   const handleImageClick = (id) => {
     navigate(`/products/${id}`); // Navigate to product details page
   };
 
-  const wishlist = (id) => {
-    setIsClicked((oldWishlist) => ({
-      ...oldWishlist,
-      [id]: !oldWishlist[id],
-    }));
+  const wishlist = async (id) => {
+    try {
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        alert("You need to log in to add to wishlist.");
+        return;
+      }
+
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/v1/wishlist/user/add_wishlist/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ product: id }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        if (data.message === "Product added to your wishlist successfully.") {
+          setIsClicked((prev) => ({
+            ...prev,
+            [id]: true, 
+          }));
+        } else if (data.message === "Product removed from your wishlist successfully.") {
+          setIsClicked((prev) => ({
+            ...prev,
+            [id]: false, 
+          }));
+        }
+      } else {
+        alert("Something went wrong while updating the wishlist.");
+      }
+    } catch (error) {
+      alert("Is alreaddy in Wishlists.");
+    }
   };
+ 
 
   // Show loading or error messages
   if (loading) return <div>Loading...</div>;

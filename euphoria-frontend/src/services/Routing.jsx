@@ -9,7 +9,6 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import ProductsDetail from "../pages/ProductsDetail";
 import Signup from "../pages/Signup";
-import CategoriesPage from "../pages/CategoriesPage";
 import UserProfile from "../pages/UserProfile";
 import WishlistsPage from "../pages/WishlistsPage";
 import MensCollections from "../pages/MensCollections";
@@ -34,7 +33,6 @@ export default function Routing() {
           <Route path="/women-collection" element={<WomensCollections />} />
           <Route path="/wishlist" element={<WishlistsPage />} />
           <Route path="/products/:id" element={<ProductsDetail />} />
-          <Route path="/category/" element={<CategoriesPage />} />
         </Routes>
       </ProductApi>
     </Router>

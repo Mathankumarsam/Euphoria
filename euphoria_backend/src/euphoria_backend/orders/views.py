@@ -75,3 +75,27 @@ class BuyNowView(APIView):
 
         except Product.DoesNotExist:
             return Response({'status': 'error', 'message': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class CartView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        # Fetch cart items for the logged-in user
+        cart_items = Cart.objects.filter(user=request.user)
+
+        # Check if the cart is empty
+        if not cart_items.exists():
+            return Response({'message': 'Your cart is empty.'}, status=status.HTTP_200_OK)
+
+        # Serialize the cart items (we can create a simple serializer for cart items)
+        cart_data = [{
+            'product_name': item.product.name,
+            'quantity': item.quantity,
+            'price': item.product.price,
+            'total_price': item.quantity * item.product.price,
+        } for item in cart_items]
+
+        return Response({
+            'cart_items': cart_data,
+        }, status=status.HTTP_200_OK)

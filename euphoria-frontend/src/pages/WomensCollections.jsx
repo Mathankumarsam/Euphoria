@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useSearch } from "../components/Search";
 import styled from "styled-components";
 import { DataContext } from "../services/ProductApi";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +14,17 @@ export default function WomensCollections() {
 
   const [isClicked, setIsClicked] = useState({});
 
+  
+    const {search} = useSearch();
+
   const { data = [], loading, error } = context;
+
+
+  const searchProduct = search
+    ? menCollections.filter((product) =>
+        product.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : menCollections;
 
   const fetchWishlistStatus = async () => {
     try {
@@ -125,7 +136,7 @@ export default function WomensCollections() {
           <Title>Womens Collections</Title>
         </Container>
         <ImageWrapper>
-          {menCollections.map((product) => (
+          {searchProduct.map((product) => (
             <div key={product.id}>
               <HeartDiv onClick={() => wishlist(product.id)}>
                 <svg

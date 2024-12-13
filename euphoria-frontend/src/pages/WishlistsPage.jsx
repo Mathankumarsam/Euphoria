@@ -11,7 +11,6 @@ const WishlistsPage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  
   const refreshAuthToken = async () => {
     let token = localStorage.getItem("authToken");
     const refreshToken = localStorage.getItem("refreshToken");
@@ -39,6 +38,91 @@ const WishlistsPage = () => {
       return null;
     }
   };
+
+  const handleAddToCart = async (id) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("You must be logged in to add items to the cart.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/user/add-to-cart/${id}/`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quantity: 1,
+          }),
+        }
+      );
+      console.log(response);
+      console.log(response.headers);
+
+      const contentType = response.headers.get("Content-Type");
+
+      if (response.ok) {
+        if (contentType && contentType.includes("application/json")) {
+          const result = await response.json();
+          alert(result.message || "Added to cart!");
+        } else {
+          alert("Unexpected response from the server.");
+        }
+      } else {
+        if (contentType && contentType.includes("application/json")) {
+          const error = await response.json();
+          alert(error.message || "Failed to add to cart.");
+        } else {
+          alert(
+            "An error occurred. The server response is not in JSON format."
+          );
+        }
+      }
+    } catch (error) {
+      alert("An error occurred: " + error.message);
+    }
+  };
+
+
+  const handleBuyNow = async (id) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("You must be logged in to buy the product.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/user/buy-now/${id}/`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quantity: 1,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        alert(result.message || "Purchase successful!");
+      } else {
+        const error = await response.json();
+        alert(error.message || "Failed to complete the purchase.");
+      }
+    } catch (error) {
+      alert("An error occurred: " + error.message);
+    }
+  };
+
+
 
   // Fetch wishlists
   const fetchWishlists = useCallback(async () => {
@@ -88,7 +172,7 @@ const WishlistsPage = () => {
   }, [fetchWishlists]);
 
   const handleImageClick = (id) => {
-    navigate(`/products/${id}`); 
+    navigate(`/products/${id}`);
   };
 
   return (
@@ -115,7 +199,12 @@ const WishlistsPage = () => {
                   <ProductPrice>
                     Price : $ {wishlist.product.price}
                   </ProductPrice>
-                  <button>Add to cart</button>
+                  <Button onClick={() => handleAddToCart(wishlist.product.id)}>
+                    Add to cart
+                  </Button>
+                  <Button1 onClick={() => handleBuyNow(wishlist.product.id)}>
+                    Buy Now
+                  </Button1>
                 </NameDiv>
               </WishlistItem>
             ))}
@@ -127,7 +216,6 @@ const WishlistsPage = () => {
     </>
   );
 };
-
 export default WishlistsPage;
 const WishlistContainer = styled.section`
   width: 80%;
@@ -166,20 +254,26 @@ const WishlistItem = styled.li`
   background-color: #f9f9f9;
 `;
 
+const Button = styled.button`
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+`;
+const Button1 = styled.button`
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+`;
+
 const NameDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
 `;
+
 const ProductName = styled.h3`
   font-size: 18px;
   font-weight: 600;

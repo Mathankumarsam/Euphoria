@@ -9,7 +9,8 @@ export default function Header() {
   const navigate = useNavigate();
 
   const [menuOpen, setmenuOpen] = useState(false);
-  const [search, setSearch] = useSearch();
+  
+  const {search, setSearch} = useSearch();
 
   useEffect(() => {
     
@@ -18,8 +19,7 @@ export default function Header() {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("username");
+    localStorage.clear();
     navigate("/login");
   };
 

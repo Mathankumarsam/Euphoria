@@ -76,8 +76,14 @@ const SectionWrapper = styled.section`
 const Section = styled.section`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   gap: 20px;
   margin: 50px auto 0;
+
+  @media screen and (max-width: 780px) {
+    justify-content: center ;
+  }
+
 `;
 
 const Container = styled.div`

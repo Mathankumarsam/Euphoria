@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
@@ -25,14 +24,24 @@ export default function AddtoCartPage() {
           },
         });
 
-        if (response.ok) {
-          const data = await response.json();
-          setCartItems(data.cart_items);
-        } else {
-          const data = await response.json();
-          setError(data.message || "Failed to fetch cart items.");
+        if (response.status === 401) {
+          setError("You must be logged in to view the cart.");
+          setLoading(false);
+          return;
         }
+
+        if (!response.ok) {
+          const data = await response.text();  // Get the raw text if response is not JSON
+          console.error("Failed to fetch cart items:", data);
+          setError("Failed to fetch cart items.");
+          setLoading(false);
+          return;
+        }
+
+        const data = await response.json();
+        setCartItems(data.cart_items);
       } catch (err) {
+        console.error("An error occurred while fetching the cart:", err);
         setError("An error occurred while fetching the cart.");
       } finally {
         setLoading(false);
@@ -41,6 +50,44 @@ export default function AddtoCartPage() {
 
     fetchCartItems();
   }, []);
+
+  const handleBuyNow = async (id) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      alert("You must be logged in to buy the product.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/user/buy-now/${id}/`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            quantity: 1,
+          }),
+        }
+      );
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message || "Purchase successful!");
+
+        // Remove the purchased item from the cart
+        setCartItems((prevCartItems) =>
+          prevCartItems.filter((item) => item.id !== id)
+        );
+      } else {
+        alert(result.message || "Failed to complete the purchase.");
+      }
+    } catch (error) {
+      alert("An error occurred: " + error.message);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -63,18 +110,24 @@ export default function AddtoCartPage() {
             <EmptyCartMessage>Your cart is empty.</EmptyCartMessage>
           ) : (
             <CartList>
-              {cartItems.map((item, index) => (
-                <CartItem key={index}>
-                  <h3>{item.product_name}</h3>
-                  <p>Quantity: <span>{item.quantity}</span></p>
-                  <p>Total Price: <span>${item.total_price}</span></p>
+              {cartItems.map((item) => (
+                <CartItem key={item.id}> 
+                  <NameDiv key={item.id} >
+                    <ProductName>{item.product_name}</ProductName>
+                    <ProductPrice>Price: ${item.price}</ProductPrice>
+                    <Quantity>Quantity: {item.quantity}</Quantity>
+                    <TotalPrice>Total Price: ${item.total_price}</TotalPrice>
+
+                    <Button1 onClick={() => handleBuyNow(item.id)}>
+                      Buy Now
+                    </Button1>
+                  </NameDiv>
                 </CartItem>
               ))}
             </CartList>
           )}
         </CartContent>
       </Section>
-
       <Footer />
     </>
   );
@@ -91,7 +144,6 @@ const Section = styled.section`
 `;
 
 const Container = styled.div`
-  width: 430px;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -131,45 +183,67 @@ const CartList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  align-items: center;
-
+  justify-content: space-between;
 `;
 
 const CartItem = styled.li`
   width: 280px;
-  height: 180px;
-  border: 1px solid #ddd;
+  height: auto;
   padding: 15px;
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
+  border: 1px solid #ddd;
 
   &:hover {
     transform: scale(1.05);
   }
 
-  h3 {
-    color: #444;
-    margin-top: 40px;
-    margin-bottom: 10px;
-    font-size: 18px;
-  }
-
-  p {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #555;
-
-    span {
-      font-weight: bold;
-      color: #e74c3c;
-    }
-  }
-
   @media (max-width: 768px) {
     width: 100%;
-    height: auto;
-    margin-bottom: 15px;
+  }
+`;
+
+const NameDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const ProductName = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+`;
+
+const ProductPrice = styled.p`
+  font-size: 14px;
+  color: green;
+`;
+
+const Quantity = styled.p`
+  font-size: 14px;
+  color: #333;
+`;
+
+const TotalPrice = styled.p`
+  font-size: 16px;
+  color: #4caf50;
+`;
+
+const Button1 = styled.button`
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darkred;
   }
 `;

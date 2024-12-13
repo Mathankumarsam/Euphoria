@@ -195,11 +195,21 @@ const Navbar = styled.div`
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
   padding: 1rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   background-color: white;
+
+  @media screen and (min-width: 360px) and (max-width: 1080px) {
+    gap: 10px;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 768px) {
+    justify-content: space-evenly;
+  }
+
+
 `;
 
 const MobileMenu = styled.div`
@@ -238,6 +248,10 @@ const NavList = styled.ul`
   gap: 1.5rem;
   font-family: Causten;
 
+  @media screen and (min-width: 360px) and (max-width: 1080px) {
+    gap: 1rem;
+  }
+
   @media screen and (min-width: 360px) and (max-width: 768px) {
     display: none;
   }
@@ -262,6 +276,11 @@ const IconList = styled.ul`
   display: flex;
   list-style: none;
   gap: 1rem;
+
+  @media screen and (min-width: 360px) and (max-width: 1080px) {
+    gap: 10px;
+  }
+
 `;
 
 const IconItem = styled.li`
@@ -287,6 +306,11 @@ const Inpudiv = styled.div`
   img {
     padding: 0.5rem;
   }
+
+  @media screen and (min-width: 360px) and (max-width: 1080px) {
+    padding: 5px;
+  }
+
 `;
 
 const SearchBar = styled.input`
@@ -295,6 +319,16 @@ const SearchBar = styled.input`
   outline: none;
   border-radius: 5px;
   width: 200px;
+
+  @media screen and (min-width: 768px) and (max-width: 980px) {
+    width: 150px;
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 820px) {
+    width: 120px;
+  }
+
+
 `;
 
 const LoginButton = styled.button`
@@ -326,4 +360,9 @@ const LogoutButton = styled.button`
 const UserSection = styled.div`
   display: flex;
   align-items: center;
+
+  @media screen and (min-width: 360px) and (max-width: 980px) {
+    display: none;
+  }
+
 `;

@@ -68,8 +68,10 @@ const Header = styled.div`
 const BrandList = styled.div`
   ul {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     list-style-type: none;
+    gap: 20px;
     padding: 0;
     margin-top: 65px;
   }

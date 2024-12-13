@@ -67,6 +67,10 @@ class BuyNowView(APIView):
                     quantity=quantity,
                     total_price=total_price
                 )
+                
+                cart_item = Cart.objects.filter(user=user, product=product).first()
+                if cart_item:
+                    cart_item.delete()  # Remove the cart item after successful purchase
 
             return Response({
                 'status': 'success',

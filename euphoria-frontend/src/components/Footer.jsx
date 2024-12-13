@@ -143,15 +143,34 @@ const TopDiv = styled.div`
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 0px;
+
+  @media screen and (max-width: 980px) {
+    justify-content: space-evenly;
+    gap: 10px 0;
+  }
+
+
 `;
 
 const IconDiv = styled.div`
   width: 75%;
   min-height: 140px;
-  margin: 10px auto 0;
+  margin: 30px auto 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+
+  @media screen and (min-width: 768px) and (max-width: 1080px) {
+    width: 85%;
+  }
+
+  @media screen and (max-width: 768px) {
+    justify-content: space-between;
+    width: 75%;
+
+  }
+
 `;
 
 const Appdiv = styled.div`
@@ -163,6 +182,13 @@ const Appdiv = styled.div`
 const Appstorediv = styled.ul`
   display: flex;
   gap: 10px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    gap: 25px;
+  
+  }
+
 `;
 const FooterUl = styled.ul`
   h3 {
@@ -180,6 +206,12 @@ const IconUl = styled.ul`
   display: flex;
   width: 20%;
   justify-content: space-evenly;
+
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+    flex-direction: column;
+    
+  }
 `;
 const IconLi = styled.li`
   background-color: #fff;
@@ -200,9 +232,14 @@ const Appli = styled.li`
   padding: 10px;
 
   h5 {
+
   }
   span {
     font-size: 20px;
+
+    @media screen and (max-width: 980px) {
+      font-size: 18px;
+    }
   }
 `;
 const Image = styled.img``;
@@ -223,7 +260,7 @@ const CopyRightA = styled.div`
 `;
 
 const PopCat = styled.div`
-  margin: 20px auto 0;
+  margin: 40px auto 0;
   display: flex;
   justify-content: space-around;
   gap: 900px;
@@ -232,7 +269,39 @@ const PopCat = styled.div`
   min-height: 100px;
   border-top: 1px solid#BEBCBD;
   border-bottom: 1px solid#BEBCBD;
+
+  @media screen and (min-width: 768px) and (max-width: 1280px) {
+    gap: 650px;   
+  }
+  
+  @media screen and (max-width: 1080px) {
+    width: 88%;
+    gap: 600px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 78%;
+    gap: 400px;
+  }
+
+  @media screen and (max-width: 648px) {
+    gap: 300px;
+  }
+
+  @media screen and (max-width: 460px) {
+    gap: 200px;
+  }
+
 `;
 const CatText = styled.h2`
   font-family: Causten;
+
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 648px) {
+    font-size: 18px;
+  }
+
 `;

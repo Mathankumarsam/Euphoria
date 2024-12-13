@@ -69,6 +69,8 @@ const ProductPage = () => {
             color: selectedColor,
             size: selectedSize,
             quantity: 1,
+            image: selectedImage,
+            id: selectedProduct.id,
           }),
         }
       );

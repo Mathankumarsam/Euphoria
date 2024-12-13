@@ -92,6 +92,11 @@ const ImageWrapper = styled.div`
   justify-content: space-between;
   align-items: start;
   gap: 50px;
+
+
+  @media screen and (max-width: 780px) {
+    justify-content: center ;
+  }
 `;
 
 const Cardimage = styled.img`

@@ -85,7 +85,6 @@ const Section = styled.section`
 `;
 
 const Container = styled.div`
-  width: 430px;
   display: flex;
   align-items: center;
   gap: 30px;

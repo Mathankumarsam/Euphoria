@@ -183,7 +183,7 @@ const Menuicon = styled.div`
     background-color: #333;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 768px) {
     display: flex;
   }
 `;
@@ -196,7 +196,7 @@ const Navbar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 1rem 2rem;
+  height: 70px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   background-color: white;
@@ -206,6 +206,14 @@ const Navbar = styled.div`
   }
 
   @media screen and (min-width: 768px) and (max-width: 768px) {
+    justify-content: space-evenly;
+  }
+
+  @media screen and (max-width: 560px) {
+    justify-content: space-around;
+  }
+
+  @media screen and (max-width: 440px) {
     justify-content: space-evenly;
   }
 
@@ -240,6 +248,20 @@ const MobileLink = styled(Link)`
 
 const Logo = styled.img`
   height: 40px;
+  width:100%;
+
+  @media screen and (min-width: 508px) {
+    width: 60px;
+  }
+
+  @media screen and (max-width: 446px) {
+    width: 50px;
+  }
+
+  @media screen and (max-width: 440px) {
+    display: none;
+  }
+
 `;
 
 const NavList = styled.ul`
@@ -294,6 +316,16 @@ const IconItem = styled.li`
     padding: 10px;
     width: 20px;
   }
+
+  @media screen and (max-width: 446px) {
+    svg {
+      height: 18px;
+      width: 18px;
+      padding: 8x;
+    }
+  }
+
+
 `;
 
 const Inpudiv = styled.div`
@@ -311,6 +343,22 @@ const Inpudiv = styled.div`
     padding: 5px;
   }
 
+  @media screen and (max-width: 590px) {
+    width: 200px;
+  }
+
+  @media screen and (max-width: 560px) {
+    width: 150px;
+  }
+
+  @media screen and (max-width: 508px) {
+    width: 120px;
+  }
+  @media screen and (max-width: 440px) {
+    width: 150px;
+  }
+
+
 `;
 
 const SearchBar = styled.input`
@@ -324,10 +372,17 @@ const SearchBar = styled.input`
     width: 150px;
   }
 
-  @media screen and (min-width: 768px) and (max-width: 820px) {
+  @media screen and (max-width: 820px) {
     width: 120px;
   }
 
+  @media screen and (max-width: 560px) {
+    width: 100px;
+  }
+
+  @media screen and (min-width: 440px) {
+    width: 200px;
+  }
 
 `;
 

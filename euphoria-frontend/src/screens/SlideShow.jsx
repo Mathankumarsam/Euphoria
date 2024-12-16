@@ -19,17 +19,41 @@ const ContentWrapper = styled.div`
   height: 90vh;
   background-size: cover;
   color: white;
+  width: auto !important;
 
   div {
     padding: 180px 120px 0;
     text-align: start;
+    display: inline-block;
+
+    @media screen and (max-width: 1280px) {
+      padding: 160px 120px 0;
+    }
+
+    @media screen and (max-width: 1080px) {
+      padding: 160px 80px 0;
+    }
+
+    @media screen and (max-width: 840px) {
+      padding: 160px 60px 0;
+    }
+
   }
 `;
 
 const Category = styled.p`
   font-size: 32px;
-  margin-bottom: 10px;
   font-weight: 500;
+
+  @media screen and (max-width: 1080px) {
+    font-size: 28px;
+  }
+
+  @media screen and (max-width: 840px) {
+    font-size: 24px;
+  }
+
+
 `;
 
 const Title = styled.h1`
@@ -37,12 +61,43 @@ const Title = styled.h1`
   margin-top: 30px;
   line-height: 100px;
   font-weight: 800;
+
+  @media screen and (max-width: 1280px) {
+    font-size: 90px;
+    margin-top: 20px;
+    line-height: 90px;
+  }
+
+  @media screen and (max-width: 1080px) {
+    font-size: 70px;
+    margin-top: 0px;
+    line-height: 70px;
+  }
+
+  @media screen and (max-width: 840px) {
+    font-size: 60px;
+    line-height: 60px;
+  }
+
 `;
 
 const Description = styled.p`
   font-size: 32px;
   margin-top: 25px;
   font-weight: 500;
+
+  @media screen and (max-width: 1280px) {
+    margin-top: 10px;
+  }
+
+  @media screen and (max-width: 1080px) {
+    font-size: 28px;
+  }
+
+  @media screen and (max-width: 840px) {
+    font-size: 24px;
+  }
+
 `;
 
 const Button = styled.button`
@@ -61,6 +116,17 @@ const Button = styled.button`
     background-color: #007bff;
     color: white;
   }
+
+  @media screen and (max-width: 1080px) {
+    padding: 13px 40px;
+  }
+
+  @media screen and (max-width: 840px) {
+    padding: 12px 30px;
+    font-size: 22px;
+  }
+
+
 `;
 
 const slideImages = [
@@ -79,10 +145,7 @@ export default function SlideShow() {
   return (
     <>
       <Section className="slide-container">
-        <Slide
-          indicators={true}
-          duration={4000}
-        >
+        <Slide indicators={true} duration={4000}>
           {slideImages.map((slideImage, index) => (
             <div key={index}>
               <ContentWrapper

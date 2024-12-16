@@ -8,8 +8,7 @@ const MensCategory = () => {
   const context = useContext(DataContext);
   const [menCollections, setMenCollections] = useState([]);
 
-  
-  const { data = [], loading, error } = context ;
+  const { data = [], loading, error } = context;
 
   useEffect(() => {
     if (Array.isArray(data)) {
@@ -35,7 +34,7 @@ const MensCategory = () => {
       </Container>
       <ImageWrapper>
         {menCollections.map((product) => (
-          <div key={product.id} onClick={() => handleClick(product.id)} >
+          <div key={product.id} onClick={() => handleClick(product.id)}>
             <Cardimage src={product.image} alt={product.name} />
             <CategoryCard>
               <ArrowIconWrapper>
@@ -56,7 +55,6 @@ const MensCategory = () => {
 
 export default MensCategory;
 
-
 // Styled Components
 
 const Section = styled.section`
@@ -65,10 +63,15 @@ const Section = styled.section`
 `;
 
 const Container = styled.div`
-  width: 430px;
   display: flex;
   align-items: center;
   gap: 30px;
+
+  @media screen and (max-width: 490px) {
+    
+  }
+
+
 `;
 
 const Hr = styled.hr`
@@ -93,9 +96,8 @@ const ImageWrapper = styled.div`
   align-items: start;
   gap: 50px;
 
-
   @media screen and (max-width: 780px) {
-    justify-content: center ;
+    justify-content: center;
   }
 `;
 
@@ -137,5 +139,3 @@ const ArrowIcon = styled.img`
   height: 20px;
   object-fit: contain;
 `;
-
-

@@ -485,7 +485,7 @@ const InfoSection = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     flex-wrap: wrap;
   }
 `;
@@ -499,7 +499,7 @@ const Title = styled.h1`
   }
   @media (max-width: 768px) {
     font-size: 1.5rem;
-    text-align: center;
+    text-align: start;
   }
 `;
 const Price = styled.div`
@@ -791,7 +791,6 @@ const DiscriptionContent = styled.div`
 const LeftDiv = styled.div``;
 const RightDiv = styled.div``;
 const Container = styled.div`
-  width: 430px;
   display: flex;
   align-items: center;
   gap: 30px;

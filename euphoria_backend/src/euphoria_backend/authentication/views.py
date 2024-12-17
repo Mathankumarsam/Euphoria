@@ -10,7 +10,7 @@ from .serializers import RegisterSerializer, LoginSerializer
 logger = logging.getLogger(__name__)
 
 @api_view(['POST'])
-@permission_classes([permissions.AllowAny])  # Allow access to anyone (no auth required)
+@permission_classes([permissions.AllowAny]) 
 def register_view(request):
     """Handles user registration"""
     serializer = RegisterSerializer(data=request.data)
@@ -55,7 +55,7 @@ def register_view(request):
 
 
 @api_view(['POST'])
-@permission_classes([permissions.AllowAny])  # Allow access to anyone (no auth required)
+@permission_classes([permissions.AllowAny]) 
 def login_view(request):
     """Handles user login and token generation"""
     serializer = LoginSerializer(data=request.data)

@@ -12,7 +12,7 @@ class AddToCartView(APIView):
         try:
             product = Product.objects.get(id=product_id)
             user = request.user
-            quantity = request.data.get('quantity', 1)  # You can pass quantity in request body
+            quantity = request.data.get('quantity', 1)  
 
             # Check if quantity is within the available stock
             if quantity <= 0 or quantity > product.stock:
@@ -44,7 +44,7 @@ class BuyNowView(APIView):
         try:
             product = Product.objects.get(id=product_id)
             user = request.user
-            quantity = request.data.get('quantity', 1)  # You can pass quantity in request body
+            quantity = request.data.get('quantity', 1)  
 
             # Check if the requested quantity is available in stock
             if quantity <= 0 or quantity > product.stock:
@@ -70,7 +70,7 @@ class BuyNowView(APIView):
                 
                 cart_item = Cart.objects.filter(user=user, product=product).first()
                 if cart_item:
-                    cart_item.delete()  # Remove the cart item after successful purchase
+                    cart_item.delete()  
 
             return Response({
                 'status': 'success',

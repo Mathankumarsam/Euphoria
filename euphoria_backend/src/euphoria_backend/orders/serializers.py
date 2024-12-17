@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Order, Cart
 
 class OrderSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()  # Return the username as a string
+    user = serializers.StringRelatedField()  
     product = serializers.StringRelatedField() 
     
     class Meta:

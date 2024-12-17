@@ -41,10 +41,10 @@ def wishlist_toggle(request):
     wishlist_item = Wishlist.objects.filter(user=user, product=product).first()
 
     if wishlist_item:
-        wishlist_item.delete()  # Remove the product from the wishlist
+        wishlist_item.delete()  
         return Response({"message": "Product removed from your wishlist successfully."}, status=status.HTTP_204_NO_CONTENT)
     else:
-        Wishlist.objects.create(user=user, product=product)  # Add the product to the wishlist
+        Wishlist.objects.create(user=user, product=product) 
         return Response({"message": "Product added to your wishlist successfully."}, status=status.HTTP_201_CREATED)
 
         

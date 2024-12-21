@@ -1,17 +1,5 @@
 from django.db import models
 
-# def get_default_feature():
-#     feature, created = Feature.objects.get_or_create(
-#         fabric="Cotton",
-#         pattern="Solid",
-#         fit="Regular",
-#         neck="Round",
-#         sleeves="Short",
-#         style="Casual"
-#     )
-#     return feature
-
-
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)

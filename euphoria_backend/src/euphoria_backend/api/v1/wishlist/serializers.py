@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from wishlist.models import Wishlist
 from products.models import Product 
+from django.contrib.auth.models import User
+from rest_framework import serializers
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,10 +33,6 @@ class AddWishlistSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError("Product already in wishlist.")
         return value
     
-# serializers.py
-from django.contrib.auth.models import User
-from rest_framework import serializers
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
